@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Contratos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+
+    <script>
+        function formatDate(input, lang, targetId) {
+            let dateValue = input.value;
+            if (dateValue) {
+                let dateParts = dateValue.split('-'); // Formato YYYY-MM-DD
+                let date = new Date(dateParts[0], dateParts[1] - 1, dateParts[2]);
+
+                let options = { day: 'numeric', month: 'long', year: 'numeric' };
+                let formattedDate = date.toLocaleDateString(lang, options);
+
+                document.getElementById(targetId).value = formattedDate;
+            }
+        }
+
+        function restoreDateFormat(input) {
+            input.value = input.dataset.originalValue || "";
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: "Arial", sans-serif;
+            background-color: #f8f9fa;
+            padding: 40px;
+        }
+
+        .container {
+            max-width: 800px;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #0d6efd;
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            border: none;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #0d6efd;
+            margin-top: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #0d6efd;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #0b5ed7;
+        }
+
+        .form-group {
+            display: flex;
+            gap: 15px;
+        }
+
+        .form-group div {
+            flex: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Ingresa los datos de tu contrato</h2>
+        <form action="/" method="POST" enctype="multipart/form-data">
+
+            <!-- 📌 1️⃣ Información del contrato -->
+            <div class="card">
+                <h3>Información del contrato</h3>
+                <label for="AGREEMENT_NO">Número de requerimiento:</label>
+                <input type="text" name="AGREEMENT_NO" required>
+
+                <div class="form-group">
+                    <div>
+                        <label for="FECHA_FIRMA">Fecha de firma:</label>
+                        <input type="date" id="FECHA_FIRMA" name="FECHA_FIRMA" 
+                               onchange="formatDate(this, 'es-ES', 'FECHA_FIRMA_DISPLAY')" required>
+                        <input type="text" id="FECHA_FIRMA_DISPLAY" readonly>
+                    </div>
+                    <div>
+                        <label for="FECHA_FIRMA_EN">Fecha de firma (Inglés):</label>
+                        <input type="date" id="FECHA_FIRMA_EN" name="FECHA_FIRMA_EN" 
+                               onchange="formatDate(this, 'en-US', 'FECHA_FIRMA_EN_DISPLAY')" required>
+                        <input type="text" id="FECHA_FIRMA_EN_DISPLAY" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div>
+                        <label for="FECHA_FINALIZACION">Fecha de finalización:</label>
+                        <input type="date" id="FECHA_FINALIZACION" name="FECHA_FINALIZACION" 
+                               onchange="formatDate(this, 'es-ES', 'FECHA_FINALIZACION_DISPLAY')" required>
+                        <input type="text" id="FECHA_FINALIZACION_DISPLAY" readonly>
+                    </div>
+                    <div>
+                        <label for="FECHA_FINALIZACION_EN">Fecha de finalización (Inglés):</label>
+                        <input type="date" id="FECHA_FINALIZACION_EN" name="FECHA_FINALIZACION_EN" 
+                               onchange="formatDate(this, 'en-US', 'FECHA_FINALIZACION_EN_DISPLAY')" required>
+                        <input type="text" id="FECHA_FINALIZACION_EN_DISPLAY" readonly>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 📌 2️⃣ Información del proveedor -->
+            <div class="card">
+                <h3>Información del proveedor</h3>
+                <label for="PROVEEDOR_NOMBRE">Nombre del proveedor:</label>
+                <input type="text" name="PROVEEDOR_NOMBRE" required>
+
+                <label for="PROVEEDOR_DIRECCION">Dirección del proveedor:</label>
+                <input type="text" name="PROVEEDOR_DIRECCION" required>
+
+                <label for="REPRESENTANTE_NOMBRE">Nombre del representante legal:</label>
+                <input type="text" name="REPRESENTANTE_NOMBRE" required>
+            </div>
+
+            <!-- 📌 3️⃣ Información del proyecto -->
+            <div class="card">
+                <h3>Información del proyecto</h3>
+                <label for="PROYECTO_NOMBRE">Nombre del proyecto:</label>
+                <input type="text" name="PROYECTO_NOMBRE" required>
+
+                <label for="PROYECTO_NOMBRE_EN">Nombre del proyecto (Inglés):</label>
+                <input type="text" name="PROYECTO_NOMBRE_EN" required>
+
+                <label for="PROYECTO_RESUMEN">Resumen del proyecto:</label>
+                <textarea name="PROYECTO_RESUMEN" required></textarea>
+
+                <label for="PROYECTO_RESUMEN_EN">Resumen del proyecto (Inglés):</label>
+                <textarea name="PROYECTO_RESUMEN_EN" required></textarea>
+
+                <label for="PROYECTO_MONTO">Monto del proyecto:</label>
+                <input type="text" id="PROYECTO_MONTO" name="PROYECTO_MONTO" required>
+
+                <label for="PROYECTO_UBICACION">Ubicación del proyecto:</label>
+                <input type="text" name="PROYECTO_UBICACION" required>
+            </div>
+
+            <!-- 📌 4️⃣ Información bancaria del proveedor -->
+            <div class="card">
+                <h3>Información bancaria del proveedor</h3>
+                <label for="BANCO_CUENTA_NOMBRE">Nombre de la cuenta bancaria:</label>
+                <input type="text" name="BANCO_CUENTA_NOMBRE" required>
+
+                <label for="BANCO_CUENTA_NUMERO">Número de cuenta:</label>
+                <input type="text" name="BANCO_CUENTA_NUMERO" required>
+
+                <label for="BANCO_NOMBRE">Nombre del banco:</label>
+                <input type="text" name="BANCO_NOMBRE" required>
+
+                <label for="BANCO_CLABE">CLABE bancaria:</label>
+                <input type="text" name="BANCO_CLABE" required>
+
+                <label for="BANCO_DIRECCION">Dirección del banco:</label>
+                <input type="text" name="BANCO_DIRECCION" required>
+            </div>
+
+            <!-- 📌 5️⃣ Información del Anexo A -->
+            <div class="card">
+                <h3>Información del Anexo A</h3>
+                <label for="ANEXO_SERVICIOS">Descripción de los servicios (Español):</label>
+                <textarea name="ANEXO_SERVICIOS" required></textarea>
+
+                <label for="ANEXO_SERVICIOS_EN">Descripción de los servicios (Inglés):</label>
+                <textarea name="ANEXO_SERVICIOS_EN" required></textarea>
+
+                <label for="anexo_imagen">Subir imagen del Anexo A:</label>
+                <input type="file" name="anexo_imagen" accept="image/*">
+            </div>
+
+            <button type="submit">Generar Contrato</button>
+        </form>
+    </div>
+</body>
+</html>

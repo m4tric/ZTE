@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selecciona una opción</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #005BAC;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .button {
+            padding: 20px 40px;
+            font-size: 20px;
+            background-color: #005BAC;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .button:hover {
+            background-color: #003F7D;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>¿Qué deseas hacer?</h1>
+    
+    <div class="container">
+        <a href="/contrato" class="button">📝 Generar Contrato</a>
+        <a href="/po" class="button">📊 Generar PO</a>
+    </div>
+
+</body>
+</html>
